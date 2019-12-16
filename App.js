@@ -1,22 +1,23 @@
 import React from 'react';
-import {StyleSheet, View, Text} from 'react-native';
+import {Text} from 'react-native';
+import {enableScreens} from 'react-native-screens';
+import {Provider} from 'react-redux';
 import SplashScreen from 'react-native-splash-screen';
 
+import store from './src/store';
+import AppNavigation from './src/components/navigation/AppNavigation';
+import Toast from './src/components/Toast';
+
+enableScreens(); // For navigation performance
+
 const App: () => React$Node = () => {
-  // SplashScreen.hide();
+  SplashScreen.hide();
   return (
-    <View style={styles.screen}>
-      <Text>Appointment App</Text>
-    </View>
+    <Provider store={store}>
+      <AppNavigation />
+      <Toast />
+    </Provider>
   );
 };
-
-const styles = StyleSheet.create({
-  screen: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-});
 
 export default App;
