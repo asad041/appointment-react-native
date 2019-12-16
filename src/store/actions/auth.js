@@ -10,6 +10,9 @@ import {
   AUTH_ERROR,
 } from './types';
 import {setToast} from './toast';
+import {setBaseUrl} from '../../utils/axiosConfig';
+
+setBaseUrl();
 
 export const loadUser = () => async dispatch => {
   try {
@@ -25,7 +28,7 @@ export const loadUser = () => async dispatch => {
   }
 };
 
-export const register = values => async disptach => {
+export const registerUser = values => async disptach => {
   try {
     const config = {
       headers: {
@@ -44,10 +47,18 @@ export const register = values => async disptach => {
     disptach({
       type: REGISTER_FAIL,
     });
+    const {data} = error.response;
+    if (data && data.errors) {
+      _.map(data.errors, value => {
+        disptach(setToast(value.msg));
+      });
+    } else {
+      disptach(setToast(error.message));
+    }
   }
 };
 
-export const login = values => async disptach => {
+export const loginUser = values => async disptach => {
   try {
     const config = {
       headers: {
@@ -58,12 +69,18 @@ export const login = values => async disptach => {
     const body = JSON.stringify(values);
 
     const response = await axios.post('/api/auth', body, config);
+
     disptach({
       type: LOGIN_SUCCESS,
       payload: response.data,
     });
   } catch (error) {
-    disptach(setToast(error.message));
+    const {data} = error.response;
+    if (data && data.msg) {
+      disptach(setToast(data.msg));
+    } else {
+      disptach(setToast(error.message));
+    }
   }
 };
 

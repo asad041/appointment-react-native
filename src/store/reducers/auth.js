@@ -1,5 +1,5 @@
 import {AsyncStorage} from 'react-native';
-import {LOGIN_SUCCESS, LOGIN_FAIL} from '../actions';
+import {LOGIN_SUCCESS, LOGIN_FAIL, REGISTER_FAIL} from '../actions';
 
 const initialState = {
   token: null,
@@ -21,6 +21,7 @@ export default (state = initialState, action) => {
       };
 
     case LOGIN_FAIL:
+    case REGISTER_FAIL:
       AsyncStorage.removeItem('token');
       return {
         ...state,

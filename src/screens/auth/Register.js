@@ -13,17 +13,20 @@ import InputField from '../../components/ui/InputField';
 import DefaultButton from '../../components/ui/DefaultButton';
 import BottomView from '../../components/ui/BottomView';
 import {
-  loginUser,
+  registerUser,
   FormReducer,
-  LOG_IN_INPUTS,
+  REGISTER_INPUTS,
   INPUT_UPDATE,
 } from '../../store/actions';
 
-const Login = ({navigation, loginUser, auth: {isAuthenticated}}) => {
+const Register = ({navigation, registerUser, auth: {isAuthenticated}}) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState();
 
-  const [formState, dispatchFormState] = useReducer(FormReducer, LOG_IN_INPUTS);
+  const [formState, dispatchFormState] = useReducer(
+    FormReducer,
+    REGISTER_INPUTS,
+  );
 
   const inputChangedHandler = useCallback(
     (inputIdentifier, inputValue, inputValidity) => {
@@ -52,13 +55,14 @@ const Login = ({navigation, loginUser, auth: {isAuthenticated}}) => {
     Keyboard.dismiss();
     if (formState.formIsValid) {
       setLoading(true);
-      await loginUser({
+      await registerUser({
         email: formState.inputValues.email,
         password: formState.inputValues.password,
+        name: formState.inputValues.name,
       });
       setLoading(isAuthenticated);
     } else {
-      setError('Please make sure your email or password is valid');
+      setError('Please make sure all fields are filled up');
     }
   };
 
@@ -67,8 +71,22 @@ const Login = ({navigation, loginUser, auth: {isAuthenticated}}) => {
       <View style={styles.formContainer}>
         <View style={styles.container}>
           <Text style={styles.title}>Appointment</Text>
-          <Text style={styles.subTitle}>Welcome back!</Text>
+          <Text style={styles.subTitle}>Register now!</Text>
         </View>
+        <InputField
+          id="name"
+          label="Fullname"
+          placeholder="Fullname"
+          keyboardType="default"
+          returnKeyType="next"
+          required
+          minLength={2}
+          maxLength={255}
+          autoCapitalize="none"
+          initialValue=""
+          errorText="Please make sure your fullname is valid"
+          onInputChange={inputChangedHandler}
+        />
         <InputField
           id="email"
           label="Email address"
@@ -88,7 +106,7 @@ const Login = ({navigation, loginUser, auth: {isAuthenticated}}) => {
           label="Password"
           placeholder="Password"
           keyboardType="default"
-          returnKeyType="done"
+          returnKeyType="next"
           password
           required
           secureTextEntry
@@ -103,15 +121,15 @@ const Login = ({navigation, loginUser, auth: {isAuthenticated}}) => {
             <ActivityIndicator size="small" />
           ) : (
             formState.formIsValid && (
-              <DefaultButton text="Login" onPress={authHandler} />
+              <DefaultButton text="Register" onPress={authHandler} />
             )
           )}
         </View>
       </View>
       <BottomView
-        text="Don't have an account?"
+        text="Already have an account?"
         onPress={() => {
-          navigation.navigate({routeName: 'Register'});
+          navigation.navigate({routeName: 'Login'});
         }}
       />
     </View>
@@ -152,4 +170,4 @@ const mapStateToProps = state => ({
   auth: state.auth,
 });
 
-export default connect(mapStateToProps, {loginUser})(Login);
+export default connect(mapStateToProps, {registerUser})(Register);

@@ -1,14 +1,14 @@
 export const INPUT_UPDATE = 'INPUT_UPDATE';
 
-export const SING_UP_INPUTS = {
+export const REGISTER_INPUTS = {
   inputValues: {
     email: '',
-    fullname: '',
+    name: '',
     password: '',
   },
   inputValidities: {
     email: false,
-    fullname: false,
+    name: false,
     password: false,
   },
   formIsValid: false,
