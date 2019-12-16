@@ -73,6 +73,7 @@ const Login = ({navigation, loginUser, auth: {isAuthenticated}}) => {
           id="email"
           label="Email address"
           placeholder="Email address"
+          autoCompleteType="email"
           keyboardType="email-address"
           returnKeyType="next"
           email
