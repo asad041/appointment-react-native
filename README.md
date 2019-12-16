@@ -2,9 +2,7 @@
 
 This is a React Native application, "MERN Stack Front To Back And React native app". It is a small booking appointment slot app that includes authentication, slots, and appointments.
 
-# Web Version
-
-[Appointment app](https://github.com/asad041/appointment-mern)
+Web version: [Appointment app](https://github.com/asad041/appointment-mern)
 
 ## Installation
 
