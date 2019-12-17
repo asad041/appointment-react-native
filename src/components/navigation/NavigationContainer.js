@@ -6,7 +6,7 @@ import AppNavigation from './AppNavigation';
 
 const NavigationContainer = () => {
   const navRef = useRef();
-  const isAuthenticated = useSelector(state => state.auth);
+  const {isAuthenticated} = useSelector(state => state.auth);
 
   useEffect(() => {
     if (!isAuthenticated) {

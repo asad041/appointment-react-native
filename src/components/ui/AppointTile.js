@@ -2,13 +2,18 @@ import React from 'react';
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import Colors from '../../constants/color';
 
-const ItemTile = ({title, subTitle, onPress}) => {
+const AppointTile = ({status, seller, date, onPress}) => {
   return (
     <TouchableOpacity onPress={onPress}>
-      <View style={styles.container}>
+      <View style={{...styles.container, ...{backgroundColor: Colors[status]}}}>
         <View style={styles.body}>
-          <Text style={styles.title}>{title}</Text>
-          <Text style={styles.subTitle}>{subTitle}</Text>
+          <View style={styles.statusContainer}>
+            <Text style={styles.status}>{status}</Text>
+            <Text style={styles.date}>{date}</Text>
+          </View>
+          <Text numberOfLines={1} style={styles.name}>
+            {seller.name} ({seller.email})
+          </Text>
         </View>
       </View>
     </TouchableOpacity>
@@ -36,13 +41,21 @@ const styles = StyleSheet.create({
   body: {
     width: '90%',
   },
-  title: {
-    fontSize: 18,
+  statusContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
-  subTitle: {
+  status: {
+    fontSize: 16,
+  },
+  name: {
+    fontSize: 14,
+  },
+  date: {
+    width: '85%',
+    textAlign: 'right',
     fontSize: 11,
-    color: Colors.blur,
   },
 });
 
-export default ItemTile;
+export default AppointTile;

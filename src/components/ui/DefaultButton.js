@@ -16,9 +16,10 @@ const DefaultButton = ({onPress, buttonStyle, textStyle, text}) => {
 
 const styles = StyleSheet.create({
   button: {
-    width: '100%',
+    width: '90%',
     backgroundColor: Colors.primary,
     marginVertical: 5,
+    marginHorizontal: 10,
     paddingVertical: 12,
     alignItems: 'center',
     borderRadius: 5,

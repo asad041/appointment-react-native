@@ -1,5 +1,6 @@
 import AsyncStorage from '@react-native-community/async-storage';
 import {LOGIN_SUCCESS, LOGIN_FAIL, REGISTER_FAIL} from '../actions';
+import {setToken, removeToken} from '../../utils/axiosConfig';
 
 const initialState = {
   token: null,
@@ -12,7 +13,7 @@ export default (state = initialState, action) => {
   const {type, payload} = action;
   switch (type) {
     case LOGIN_SUCCESS:
-      AsyncStorage.setItem('token', payload.token);
+      setToken(payload.token);
       return {
         ...state,
         ...payload,
@@ -22,7 +23,7 @@ export default (state = initialState, action) => {
 
     case LOGIN_FAIL:
     case REGISTER_FAIL:
-      AsyncStorage.removeItem('token');
+      removeToken();
       return {
         ...state,
         token: null,

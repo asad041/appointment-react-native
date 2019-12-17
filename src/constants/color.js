@@ -6,4 +6,8 @@ export default {
   white: '#ffffff',
   red: '#FF0000',
   border: '#EAEDED',
+  accepted: '#00d1b2',
+  rejected: '#f14668',
+  requested: '#ffdd57',
+  completed: '#48c774',
 };

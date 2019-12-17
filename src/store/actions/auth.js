@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import AsyncStorage from '@react-native-community/async-storage';
 import axios from 'axios';
 import {
   LOGIN_SUCCESS,
@@ -9,12 +10,17 @@ import {
   AUTH_ERROR,
 } from './types';
 import {setToast} from './toast';
-import {setBaseUrl} from '../../utils/axiosConfig';
+import {setBaseUrl, setAuthToken, getToken} from '../../utils/axiosConfig';
 
 setBaseUrl();
 
 export const loadUser = () => async dispatch => {
   try {
+    const token = await AsyncStorage.getItem('@token');
+    if (token) {
+      setAuthToken(token);
+    }
+
     const response = await axios.get('/api/auth');
     dispatch({
       type: LOAD_USER,

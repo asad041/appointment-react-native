@@ -10,6 +10,7 @@ import {useSelector, useDispatch} from 'react-redux';
 import {getSellers, setSellerLoading} from '../../store/actions';
 import Colors from '../../constants/color';
 import ItemTile from '../../components/ui/ItemTile';
+import AppointmentList from './AppointmentList';
 
 const Dashboard = ({navigation}) => {
   const dispatch = useDispatch();
@@ -48,14 +49,19 @@ const Dashboard = ({navigation}) => {
       {loading ? (
         <ActivityIndicator size="large" />
       ) : (
-        <FlatList
-          keyExtractor={item => item._id}
-          data={sellers}
-          renderItem={item => renderItem(item)}
-          numColumns={1}
-          initialNumToRender={0}
-        />
+        sellers.length > 0 && (
+          <View style={styles.sellerList}>
+            <FlatList
+              keyExtractor={item => item._id}
+              data={sellers}
+              renderItem={item => renderItem(item)}
+              numColumns={1}
+              initialNumToRender={0}
+            />
+          </View>
+        )
       )}
+      <AppointmentList />
     </View>
   );
 };
@@ -66,12 +72,16 @@ const styles = StyleSheet.create({
     padding: 5,
   },
   container: {
-    width: '100%',
+    width: '96%',
     backgroundColor: Colors.background,
     paddingHorizontal: 10,
     paddingVertical: 5,
     borderRadius: 10,
     marginBottom: 5,
+    marginHorizontal: 10,
+  },
+  sellerList: {
+    height: 300,
   },
   text: {
     color: Colors.blur,

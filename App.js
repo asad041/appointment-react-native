@@ -7,7 +7,7 @@ import SplashScreen from 'react-native-splash-screen';
 import store from './src/store';
 import NavigationContainer from './src/components/navigation/NavigationContainer';
 import Toast from './src/components/Toast';
-import {setAuthToken} from './src/utils/axiosConfig';
+import {setAuthToken, getToken} from './src/utils/axiosConfig';
 import {loadUser} from './src/store/actions';
 
 enableScreens(); // For navigation performance
@@ -15,7 +15,7 @@ enableScreens(); // For navigation performance
 const App: () => React$Node = () => {
   const {loading} = store.getState().auth;
   useEffect(() => {
-    const token = AsyncStorage.getItem('token');
+    const token = getToken(); //AsyncStorage.getItem('@token');
     if (token && loading) {
       setAuthToken(token);
       store.dispatch(loadUser());

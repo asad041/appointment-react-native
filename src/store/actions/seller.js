@@ -8,14 +8,15 @@ import {
   NOT_FOUND_SELLER,
 } from './types';
 import {setToast} from './toast';
-import {setBaseUrl, setAuthToken} from '../../utils/axiosConfig';
+import {setBaseUrl, setAuthToken, getToken} from '../../utils/axiosConfig';
 
 setBaseUrl();
 
 export const getSellers = () => async dispatch => {
   try {
-    if (AsyncStorage.token) {
-      setAuthToken(AsyncStorage.token);
+    const token = await AsyncStorage.getItem('@token');
+    if (token) {
+      setAuthToken(token);
     }
     const response = await axios.get('/api/slots');
     dispatch({
@@ -29,9 +30,11 @@ export const getSellers = () => async dispatch => {
 
 export const getSeller = id => async dispatch => {
   try {
-    if (AsyncStorage.token) {
-      setAuthToken(AsyncStorage.token);
+    const token = await AsyncStorage.getItem('@token');
+    if (token) {
+      setAuthToken(token);
     }
+
     const response = await axios.get(`/api/slots/user/${id}`);
     dispatch({
       type: GET_SELLER,
