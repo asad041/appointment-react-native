@@ -1,6 +1,7 @@
 import {
   GET_SELLERS,
   GET_SELLER,
+  SEARCH_SELLER,
   SELLER_LOADING,
   NOT_FOUND_SELLER,
 } from '../actions';
@@ -22,6 +23,7 @@ export default (state = initialState, action) => {
       };
 
     case GET_SELLERS:
+    case SEARCH_SELLER:
       return {
         ...state,
         sellers: payload,
@@ -40,6 +42,7 @@ export default (state = initialState, action) => {
         ...state,
         seller: null,
         loading: false,
+        error: true,
       };
 
     default:

@@ -11,6 +11,7 @@ import {getSellers, setSellerLoading} from '../../store/actions';
 import Colors from '../../constants/color';
 import ItemTile from '../../components/ui/ItemTile';
 import AppointmentList from './AppointmentList';
+import Search from '../search';
 
 const Dashboard = ({navigation}) => {
   const dispatch = useDispatch();
@@ -43,6 +44,7 @@ const Dashboard = ({navigation}) => {
 
   return (
     <View style={styles.screen}>
+      <Search />
       <View style={styles.container}>
         <Text style={styles.text}>Sellers list</Text>
       </View>
