@@ -47,9 +47,11 @@ const Register = ({navigation, registerUser, auth: {isAuthenticated}}) => {
     }
   }, [error]);
 
-  if (isAuthenticated) {
-    navigation.navigate({routeName: 'App'});
-  }
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigation.navigate({routeName: 'App'});
+    }
+  }, [isAuthenticated]);
 
   const authHandler = async () => {
     Keyboard.dismiss();

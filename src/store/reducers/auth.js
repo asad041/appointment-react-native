@@ -1,4 +1,4 @@
-import {AsyncStorage} from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 import {LOGIN_SUCCESS, LOGIN_FAIL, REGISTER_FAIL} from '../actions';
 
 const initialState = {

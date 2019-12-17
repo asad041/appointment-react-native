@@ -2,7 +2,6 @@ import _ from 'lodash';
 import axios from 'axios';
 import {
   LOGIN_SUCCESS,
-  LOGIN_FAIL,
   REGISTER_SUCCESS,
   REGISTER_FAIL,
   LOGOUT,
@@ -22,7 +21,12 @@ export const loadUser = () => async dispatch => {
       payload: response.data,
     });
   } catch (error) {
-    dispatch(setToast(error.message));
+    const {data} = error.response;
+    if (data.msg) {
+      dispatch(setToast(data.msg));
+    } else {
+      dispatch(setToast(error.message));
+    }
     dispatch({
       type: AUTH_ERROR,
     });

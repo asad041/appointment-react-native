@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {AsyncStorage} from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 import {enableScreens} from 'react-native-screens';
 import {Provider} from 'react-redux';
 import SplashScreen from 'react-native-splash-screen';
@@ -13,9 +13,10 @@ import {loadUser} from './src/store/actions';
 enableScreens(); // For navigation performance
 
 const App: () => React$Node = () => {
+  const {loading} = store.getState().auth;
   useEffect(() => {
     const token = AsyncStorage.getItem('token');
-    if (token) {
+    if (token && loading) {
       setAuthToken(token);
       store.dispatch(loadUser());
     }

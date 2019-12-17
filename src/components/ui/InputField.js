@@ -103,7 +103,7 @@ const InputField = props => {
 const styles = StyleSheet.create({
   inputContainer: {
     width: '100%',
-    marginBottom: 12,
+    marginBottom: 15,
   },
   label: {
     fontSize: 11,

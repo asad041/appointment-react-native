@@ -1,7 +1,12 @@
 import _ from 'lodash';
 import axios from 'axios';
-import {AsyncStorage} from 'react-native';
-import {GET_SELLERS} from './types';
+import AsyncStorage from '@react-native-community/async-storage';
+import {
+  GET_SELLERS,
+  GET_SELLER,
+  SELLER_LOADING,
+  NOT_FOUND_SELLER,
+} from './types';
 import {setToast} from './toast';
 import {setBaseUrl, setAuthToken} from '../../utils/axiosConfig';
 
@@ -13,7 +18,6 @@ export const getSellers = () => async dispatch => {
       setAuthToken(AsyncStorage.token);
     }
     const response = await axios.get('/api/slots');
-    console.log(response.data);
     dispatch({
       type: GET_SELLERS,
       payload: response.data,
@@ -21,4 +25,34 @@ export const getSellers = () => async dispatch => {
   } catch (error) {
     dispatch(setToast(error.message));
   }
+};
+
+export const getSeller = id => async dispatch => {
+  try {
+    if (AsyncStorage.token) {
+      setAuthToken(AsyncStorage.token);
+    }
+    const response = await axios.get(`/api/slots/user/${id}`);
+    dispatch({
+      type: GET_SELLER,
+      payload: response.data,
+    });
+  } catch (error) {
+    const {data} = error.response;
+    if (data.msg) {
+      dispatch(setToast(data.msg));
+    } else {
+      dispatch(setToast(error.message));
+    }
+    dispatch({
+      type: NOT_FOUND_SELLER,
+    });
+  }
+};
+
+export const setSellerLoading = (flag = true) => dispatch => {
+  dispatch({
+    type: SELLER_LOADING,
+    payload: flag,
+  });
 };
